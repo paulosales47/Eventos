@@ -1,0 +1,298 @@
+﻿using System;
+using System.Data;
+using System.Data.SQLite;
+using System.Windows.Forms;
+
+namespace CRUD_SQLite.SemCamadas
+{
+    public partial class Form1 : Form
+    {
+        string connectionString = @"Data Source=C:\dados\SQLite\Cadastro.s3db";
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            CarregaDados();
+        }
+
+        //private void Conectar()
+        //{
+        //    try
+        //    {
+        //        SQLiteConnection conn;
+
+        //        String strConn = @"Data Source=C:\dados\SQLite\Cadastro.s3db";
+        //        conn = new SQLiteConnection(strConn);
+        //        if (conn.State == ConnectionState.Closed)
+        //        {
+        //            conn.Open();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Erro :" + ex.Message);
+        //    }
+        //}
+
+        //private void ExecutarSQL(string sql)
+        //{
+        //    try
+        //    {
+        //        Conectar();
+        //        SQLiteCommand cmd = new SQLiteCommand();
+        //        cmd.Connection = _con;
+        //        cmd.CommandType = CommandType.Text;
+        //        cmd.CommandText = sql;
+        //        cmd.ExecuteNonQuery();
+        //        cmd.Dispose();
+        //        _con.Close();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Erro :" + ex.Message);
+        //    }
+
+        //}
+
+        private Aluno GetDadosDoGrid()
+        {
+            int linha;
+            linha = dgvAlunos.CurrentRow.Index;
+            Aluno aluno = new Aluno();
+            aluno.Id = Convert.ToInt32(dgvAlunos[0, linha].Value);
+            aluno.nome = dgvAlunos[1, linha].Value.ToString();
+            aluno.email = dgvAlunos[2, linha].Value.ToString();
+            aluno.idade = Convert.ToInt32(dgvAlunos[3, linha].Value);
+            return aluno;
+        }
+
+        //private void CarregaDados()
+        //{
+        //    DataTable dt = new DataTable();
+        //    SQLiteConnection conn = null;
+
+        //    String sql = "select * from Alunos";
+        //    String strConn = @"Data Source=C:\dados\SQLite\Cadastro.s3db";
+        //    try
+        //    {
+        //        conn = new SQLiteConnection(strConn);
+        //        SQLiteDataAdapter da = new SQLiteDataAdapter(sql, strConn);
+        //        da.Fill(dt);
+        //        dgvAlunos.DataSource = dt.DefaultView;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Erro :" + ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        if (conn.State == ConnectionState.Open)
+        //        {
+        //            conn.Close();
+        //        }
+        //    }
+        //}
+
+        private void CarregaDados()
+        {
+            dgvAlunos.DataSource = LeDados2<SQLiteConnection, SQLiteDataAdapter>("Select * from Alunos");
+        }
+
+        //public DataTable LeDados1<T>(string query) where T : IDbConnection, new()
+        //{
+        //    using (var conn = new T())
+        //    {
+        //        using (var cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = query;
+        //            cmd.Connection.ConnectionString = connectionString;
+        //            cmd.Connection.Open();
+        //            var table = new DataTable();
+        //            table.Load(cmd.ExecuteReader());
+        //            return table;
+        //        }
+        //    }
+        //}
+
+        public DataTable LeDados2<S, T>(string query) where S : IDbConnection, new()
+                                           where T : IDbDataAdapter, IDisposable, new()
+        {
+            using (var conn = new S())
+            {
+                using (var da = new T())
+                {
+                    using (da.SelectCommand = conn.CreateCommand())
+                    {
+                        da.SelectCommand.CommandText = query;
+                        da.SelectCommand.Connection.ConnectionString = connectionString;
+                        DataSet ds = new DataSet(); //conn é aberto pelo dataadapter
+                        da.Fill(ds);
+                        return ds.Tables[0];
+                    }
+                }
+            }
+        }
+
+        //public void AbrirConexao<T>() where T : IDbConnection, new()
+        //{
+        //    var connectionString = ConfigurationManager.ConnectionStrings["MyConName"];
+        //    var providerName = connectionString.ProviderName;
+        //    var factory = DbProviderFactories.GetFactory(providerName);
+        //    var _connection = factory.CreateConnection();
+        //    _connection.Open();
+        //}
+
+
+        //public void IncluirDados<T>() where T : IDbConnection, new()
+        //{
+        //    using (var command = _connection.CreateCommand())
+        //    {
+        //        command.CommandText = @"INSERT INTO Users (CompanyId, FirstName) VALUES(@companyId, @firstName)";
+        //        command.AddParameter("companyId", companyId);
+        //        command.AddParameter("firstName", firstName);
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
+
+        //public void AlterarDados<T>() where T : IDbConnection, new()
+        //{
+
+        //    using (var command = _connection.CreateCommand())
+        //    {
+        //        command.CommandText = @"UPDATE Users SET CompanyId = @companyId WHERE Id = @userId";
+        //        command.AddParameter("companyId", companyId);
+        //        command.AddParameter("userId", LoggedInUser.Id);
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
+
+        //public void ExcluirDados<T>() where T : IDbConnection, new()
+        //{
+        //    using (var command = _connection.CreateCommand())
+        //    {
+        //        command.CommandText = @"DELETE FROM Users WHERE Id = @userId";
+        //        command.AddParameter("userId", LoggedInUser.Id);
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
+
+        public int DeletaDados(Aluno aluno)
+        {
+            int resultado = -1;
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "DELETE FROM alunos WHERE Id = @Id";
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@Id", aluno.Id);
+                    try
+                    {
+                        resultado = cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+            return resultado;
+        }
+
+        public int AtualizaDados(Aluno aluno)
+        {
+            int resultado = -1;
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "UPDATE alunos SET nome=@nome, email=@email, idade=@idade WHERE Id = @id";
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@Id", aluno.Id);
+                    cmd.Parameters.AddWithValue("@nome", aluno.nome);
+                    cmd.Parameters.AddWithValue("@email", aluno.email);
+                    cmd.Parameters.AddWithValue("@idade", aluno.idade);
+                    try
+                    {
+                        resultado = cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+            return resultado;
+        }
+
+        //public List<language> GetDados(int langId)
+        //{
+        //    List<language> langs = new List<language>();
+        //    try
+        //    {
+        //        using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+        //        {
+        //            conn.Open();
+        //            string sql = "SELECT * FROM Language WHERE Id = " + langId;
+        //            if (langId == 0)
+        //            {
+        //                sql = "SELECT * FROM Language";
+        //            }
+        //            using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+        //            {
+        //                using (SQLiteDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        Language la = new Language();
+        //                        la.LangTitle = reader["LangTitle"].ToString();
+        //                        la.Id = Int32.Parse(reader["Id"].ToString());
+        //                        langs.Add(la);
+        //                    }
+        //                }
+        //            }
+        //            conn.Close();
+        //        }
+        //    }
+        //    catch (SQLiteException e)
+        //    {
+        //        //...
+        //    }
+        //    return langs;
+        //}
+
+        private void btnIncluir_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.ShowDialog();
+            CarregaDados();
+        }
+
+        private void btnAlterar_Click(object sender, EventArgs e)
+        {
+            AtualizaDados(GetDadosDoGrid());
+            CarregaDados();
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            DeletaDados(GetDadosDoGrid());
+            CarregaDados();
+        }
+    }
+}
