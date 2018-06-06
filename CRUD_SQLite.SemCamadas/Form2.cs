@@ -8,8 +8,7 @@ namespace CRUD_SQLite.SemCamadas
     {
         Aluno _aluno;
         string operacao = "";
-        //string connectionString = @"Data Source=G:\ezvid\Desenvolvimento\C#\CRUD_SQLite\BD\REGISTROS.db";
-        string connectionString = @"Data Source=C:\APP\ARQUIVOS\REGISTROS.db";
+        string connectionString = @"Data Source=C:\APP\DADOS\REGISTROS.db";
 
         public IPPLAN(Aluno aluno)
         {

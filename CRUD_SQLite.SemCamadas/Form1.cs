@@ -7,9 +7,7 @@ namespace CRUD_SQLite.SemCamadas
 {
     public partial class Form1 : Form
     {
-        //string connectionString = @"Data Source=C:\dados\SQLite\Cadastro.s3db";
-        //string connectionString = @"Data Source=G:\ezvid\Desenvolvimento\C#\CRUD_SQLite\BD\REGISTROS.db";
-        string connectionString = @"Data Source=C:\APP\ARQUIVOS\REGISTROS.db";
+        string connectionString = @"Data Source=C:\APP\DADOS\REGISTROS.db";
 
         public Form1()
         {
@@ -23,7 +21,7 @@ namespace CRUD_SQLite.SemCamadas
 
         private void CarregaDados()
         {
-            dgvAlunos.DataSource = LeDados<SQLiteConnection, SQLiteDataAdapter>("Select * from Alunos");
+            dgvAlunos.DataSource = LeDados<SQLiteConnection, SQLiteDataAdapter>("SELECT * from Alunos");
         }
 
         public DataTable LeDados<S, T>(string query) where S : IDbConnection, new()
