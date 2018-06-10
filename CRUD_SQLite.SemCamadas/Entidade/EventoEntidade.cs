@@ -16,9 +16,9 @@ namespace CRUD_SQLite.SemCamadas.Entidade
             set { _idEvento = value; }
         }
 
-        private int _nome;
+        private string _nome;
 
-        public int Nome
+        public string Nome
         {
             get { return _nome; }
             set { _nome = value; }

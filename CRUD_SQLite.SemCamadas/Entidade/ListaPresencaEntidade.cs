@@ -8,6 +8,12 @@ namespace CRUD_SQLite.SemCamadas.Entidade
 {
     public class ListaPresencaEntidade
     {
+
+        public ListaPresencaEntidade()
+        {
+            _eventoEntidade = new EventoEntidade();
+        }
+
         private int _idListaPresenca;
 
         public int IdListaPresenca
@@ -55,5 +61,14 @@ namespace CRUD_SQLite.SemCamadas.Entidade
             get { return _observacao; }
             set { _observacao = value; }
         }
+
+        private EventoEntidade _eventoEntidade;
+
+        public EventoEntidade Evento
+        {
+            get { return _eventoEntidade; }
+            set { _eventoEntidade = value; }
+        }
+
     }
 }

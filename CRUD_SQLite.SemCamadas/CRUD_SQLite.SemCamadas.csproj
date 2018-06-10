@@ -62,12 +62,21 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Paomedia-Small-N-Flat-Building.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -92,22 +101,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aluno.cs" />
     <Compile Include="Entidade\EventoEntidade.cs" />
     <Compile Include="Entidade\ListaPresencaEntidade.cs" />
     <Compile Include="Entidade\PessoaEntidade.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Entidade\PresencaEventoEntidade.cs" />
     <Compile Include="Formulario\Evento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +129,12 @@
     <Compile Include="Formulario\FormPessoa.Designer.cs">
       <DependentUpon>FormPessoa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formulario\Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formulario\Home.Designer.cs">
+      <DependentUpon>Home.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formulario\ListaPresenca.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,14 +147,26 @@
     <Compile Include="Formulario\Pessoa.Designer.cs">
       <DependentUpon>Pessoa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formulario\PresencaEvento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formulario\PresencaEvento.Designer.cs">
+      <DependentUpon>PresencaEvento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formulario\Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formulario\Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formulario\VisualizaPresenca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formulario\VisualizaPresenca.Designer.cs">
+      <DependentUpon>VisualizaPresenca.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Formulario\Evento.resx">
       <DependentUpon>Evento.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,27 +179,40 @@
     <EmbeddedResource Include="Formulario\FormPessoa.resx">
       <DependentUpon>FormPessoa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formulario\Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formulario\ListaPresenca.resx">
       <DependentUpon>ListaPresenca.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formulario\Pessoa.resx">
       <DependentUpon>Pessoa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formulario\PresencaEvento.resx">
+      <DependentUpon>PresencaEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formulario\Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formulario\VisualizaPresenca.resx">
+      <DependentUpon>VisualizaPresenca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="CRUD_SQLite.SemCamadas_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -196,6 +224,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConexaoComandos.txt" />
+    <Content Include="Paomedia-Small-N-Flat-Building.ico" />
+    <None Include="Resources\if_Info_131908.png" />
+    <None Include="Resources\theme-study.jpg" />
+    <None Include="Resources\CIDADE-INTEIRAWEB.jpg" />
+    <None Include="Resources\86d9c2dc9faea9244c0b4a76305f04ce.gif" />
+    <None Include="Resources\Excel-2-icon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">

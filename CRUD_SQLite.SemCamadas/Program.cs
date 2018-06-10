@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRUD_SQLite.SemCamadas.Formulario;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace CRUD_SQLite.SemCamadas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Splash());
         }
     }
 }

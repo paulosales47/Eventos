@@ -32,12 +32,12 @@ namespace CRUD_SQLite.SemCamadas.Entidade
             set { _bairro = value; }
         }
 
-        private string _entidade;
+        private string _email;
 
-        public string Entidade
+        public string Email
         {
-            get { return _entidade; }
-            set { _entidade = value; }
+            get { return _email; }
+            set { _email = value; }
         }
 
         private string _cpf;
@@ -55,5 +55,14 @@ namespace CRUD_SQLite.SemCamadas.Entidade
             get { return _rg; }
             set { _rg = value; }
         }
+
+        private string _entidade;
+
+        public string Entidade
+        {
+            get { return _entidade; }
+            set { _entidade = value; }
+        }
+
     }
 }

@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPessoa));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtNome = new System.Windows.Forms.TextBox();
+            this.txtBairro = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtEntidade = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.Label();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtRG = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -61,22 +61,22 @@
             this.label2.Location = new System.Drawing.Point(12, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 2;
             this.label2.Text = "Bairro:";
             // 
-            // textBox1
+            // txtNome
             // 
-            this.textBox1.Location = new System.Drawing.Point(71, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(421, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtNome.Location = new System.Drawing.Point(71, 13);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(421, 20);
+            this.txtNome.TabIndex = 1;
             // 
-            // textBox2
+            // txtBairro
             // 
-            this.textBox2.Location = new System.Drawing.Point(71, 52);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(421, 20);
-            this.textBox2.TabIndex = 3;
+            this.txtBairro.Location = new System.Drawing.Point(71, 52);
+            this.txtBairro.Name = "txtBairro";
+            this.txtBairro.Size = new System.Drawing.Size(421, 20);
+            this.txtBairro.TabIndex = 3;
             // 
             // label3
             // 
@@ -93,7 +93,7 @@
             this.label4.Location = new System.Drawing.Point(12, 174);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 13);
-            this.label4.TabIndex = 5;
+            this.label4.TabIndex = 6;
             this.label4.Text = "CPF:";
             // 
             // label6
@@ -102,16 +102,16 @@
             this.label6.Location = new System.Drawing.Point(12, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 7;
+            this.label6.TabIndex = 10;
             this.label6.Text = "Email:";
             // 
-            // textBox3
+            // txtEntidade
             // 
-            this.textBox3.Location = new System.Drawing.Point(71, 93);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(421, 54);
-            this.textBox3.TabIndex = 8;
+            this.txtEntidade.Location = new System.Drawing.Point(71, 93);
+            this.txtEntidade.Multiline = true;
+            this.txtEntidade.Name = "txtEntidade";
+            this.txtEntidade.Size = new System.Drawing.Size(421, 54);
+            this.txtEntidade.TabIndex = 5;
             // 
             // txtId
             // 
@@ -119,7 +119,7 @@
             this.txtId.Location = new System.Drawing.Point(474, 360);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(13, 13);
-            this.txtId.TabIndex = 12;
+            this.txtId.TabIndex = 14;
             this.txtId.Text = "0";
             this.txtId.Visible = false;
             // 
@@ -134,8 +134,9 @@
             this.btnSair.Size = new System.Drawing.Size(130, 48);
             this.btnSair.TabIndex = 13;
             this.btnSair.TabStop = false;
-            this.btnSair.Text = "Sair";
+            this.btnSair.Text = "Cancelar";
             this.btnSair.UseVisualStyleBackColor = false;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
             // btnSalvar
             // 
@@ -146,10 +147,11 @@
             this.btnSalvar.Location = new System.Drawing.Point(71, 309);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(130, 48);
-            this.btnSalvar.TabIndex = 14;
+            this.btnSalvar.TabIndex = 12;
             this.btnSalvar.TabStop = false;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = false;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // label5
             // 
@@ -157,53 +159,55 @@
             this.label5.Location = new System.Drawing.Point(12, 204);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(26, 13);
-            this.label5.TabIndex = 6;
+            this.label5.TabIndex = 8;
             this.label5.Text = "RG:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // textBox4
+            // txtRG
             // 
-            this.textBox4.Location = new System.Drawing.Point(71, 204);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(421, 20);
-            this.textBox4.TabIndex = 9;
+            this.txtRG.Location = new System.Drawing.Point(71, 201);
+            this.txtRG.Name = "txtRG";
+            this.txtRG.Size = new System.Drawing.Size(421, 20);
+            this.txtRG.TabIndex = 9;
             // 
-            // textBox5
+            // txtEmail
             // 
-            this.textBox5.Location = new System.Drawing.Point(71, 250);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(421, 20);
-            this.textBox5.TabIndex = 10;
+            this.txtEmail.Location = new System.Drawing.Point(71, 250);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(421, 20);
+            this.txtEmail.TabIndex = 11;
             // 
-            // textBox6
+            // maskedTextBox1
             // 
-            this.textBox6.Location = new System.Drawing.Point(71, 171);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(421, 20);
-            this.textBox6.TabIndex = 15;
+            this.maskedTextBox1.Location = new System.Drawing.Point(71, 171);
+            this.maskedTextBox1.Mask = "999-999-999-99";
+            this.maskedTextBox1.Name = "maskedTextBox1";
+            this.maskedTextBox1.Size = new System.Drawing.Size(421, 20);
+            this.maskedTextBox1.TabIndex = 7;
             // 
             // FormPessoa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 381);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.txtId);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.txtRG);
+            this.Controls.Add(this.txtEntidade);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtBairro);
+            this.Controls.Add(this.txtNome);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormPessoa";
-            this.Text = "FormPessoa";
+            this.Text = "Pessoa";
+            this.Load += new System.EventHandler(this.FormPessoa_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,18 +217,18 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtNome;
+        private System.Windows.Forms.TextBox txtBairro;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtEntidade;
         private System.Windows.Forms.Label txtId;
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtRG;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
     }
 }
