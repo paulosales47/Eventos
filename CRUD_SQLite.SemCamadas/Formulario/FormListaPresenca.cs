@@ -27,6 +27,8 @@ namespace CRUD_SQLite.SemCamadas.Formulario
 
         private void FormListaPresenca_Load(object sender, EventArgs e)
         {
+            CarregaEventos();
+
             if (_entidade == null)
             {
                 txtNome.Focus();
@@ -41,9 +43,41 @@ namespace CRUD_SQLite.SemCamadas.Formulario
                 txtEntidade.Text = _entidade.Entidade;
                 cbSalaTecnica.Text = _entidade.SalaTecnica.ToString();
                 txtObservacao.Text = _entidade.Observacao;
+                cbEvento.SelectedValue = _entidade.Evento.IdEvento;
             }
 
-            CarregaEventos();
+            
+        }
+
+        private string BuscaNomeId(string idEvento)
+        {
+            string sql = "SELECT EVENTO.NOME FROM TB_EVENTO AS EVENTO WHERE ID_EVENTO = "+idEvento;
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SQLiteDataAdapter da = new SQLiteDataAdapter(sql, conn))
+                {
+                    try
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        var nomeEvento = dt.Rows[0][0];
+
+                        return nomeEvento.ToString();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
         }
 
         private Boolean ValidaDados()
@@ -55,6 +89,8 @@ namespace CRUD_SQLite.SemCamadas.Formulario
 
             if (txtBairro.Text == string.Empty)
                 retorno = false;
+
+
 
             return retorno;
         }
@@ -128,9 +164,9 @@ namespace CRUD_SQLite.SemCamadas.Formulario
 
         private void CarregaEventos()
         {
+            cbEvento.DataSource = LeDadosEventos<SQLiteConnection, SQLiteDataAdapter>("SELECT * FROM TB_EVENTO");
             cbEvento.DisplayMember = "NOME";
             cbEvento.ValueMember = "ID_EVENTO";
-            cbEvento.DataSource = LeDadosEventos<SQLiteConnection, SQLiteDataAdapter>("SELECT * FROM TB_EVENTO");
         }
 
         public DataTable LeDadosEventos<S, T>(string query) where S : IDbConnection, new()
